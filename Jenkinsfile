@@ -4,7 +4,7 @@ pipeline {
         stage('Checkout branch') {
             steps {
                 withFolderProperties {
-                    checkout scm
+                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'ziv-git', url: 'git@github.com:buymetech/buyme-app-b2c.git']]])
                     sh "git checkout ${env.GH_BRANCH}"
                 }
             }
