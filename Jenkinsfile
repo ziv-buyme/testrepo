@@ -5,6 +5,7 @@ pipeline {
             steps {
                 withFolderProperties {
                     checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'ziv-git', url: 'git@github.com:buymetech/buyme-app-b2c.git']]])
+                    sh "ls -la"
                     sh "git checkout ${env.GH_BRANCH}"
                 }
             }
@@ -46,7 +47,7 @@ pipeline {
                     sh "docker rmi ${env.SERVICE_NAME}:latest || true"
                     sh "docker rmi ${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com/${env.SERVICE_NAME}:${env.BUILD_NUMBER} || true"
                     sh "docker rmi ${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com/${env.SERVICE_NAME}:latest || true"
-                    cleanWs()
+//                     cleanWs()
                 }
             }
     }
