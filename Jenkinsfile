@@ -4,6 +4,7 @@ pipeline {
         stage('Checkout branch') {
             steps {
                 withFolderProperties {
+                    checkout scm
                     sh "git checkout ${env.GH_BRANCH}"
                 }
             }
