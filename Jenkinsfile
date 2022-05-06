@@ -4,8 +4,7 @@ pipeline {
         stage('Checkout branch') {
             steps {
                 withFolderProperties {
-//                     checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'ziv-git', url: 'git@github.com:buymetech/buyme-app-b2c.git']]])
-                    checkout scm
+                    checkout([$class: 'GitSCM', branches: [[name: "${env.GH_BRANCH}"]], extensions: [], userRemoteConfigs: [[credentialsId: "${env.GH_CRED_ID}", url: "${env.GH_URL}"]]])
                     sh "ls -la"
                     sh "git checkout ${env.GH_BRANCH}"
                 }
@@ -23,7 +22,7 @@ pipeline {
             steps {
                 withFolderProperties {
                     script {
-                        app = docker.build("${env.SERVICE_NAME}", "./service")
+                        app = docker.build("${env.SERVICE_NAME}", "${env.SERVICE_FOLDER}")
                     }
                 }
             }
